@@ -52,6 +52,14 @@ print_r($text);
 // 输出: Button 按钮
 ```
 
+```php
+$rules = [
+ 'h1' => ['h1','text']
+];
+$ql = $ql->chrome('https://www.iviewui.com/components/button');
+$data = $ql->rules($rules)->queryData();
+```
+
 设置Puppeteer launch选项,选项文档：https://github.com/GoogleChrome/puppeteer/blob/v1.11.0/docs/api.md#puppeteerlaunchoptions
 ```php
 $text = $ql->chrome('https://www.iviewui.com/components/button',[
@@ -95,7 +103,10 @@ $text = $ql->chrome(function ($page,$browser) {
 $text = $ql->chrome(function ($page,$browser) {
     $page->goto('https://www.iviewui.com/components/button');
     // 页面截图
-    $page->screenshot(['path' => 'page.png']);
+    $page->screenshot([
+        'path' => 'page.png',
+        'fullPage' => true
+    ]);
     $html = $page->content();
     $browser->close();
     return $html;
