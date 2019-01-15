@@ -78,8 +78,35 @@ $text = $ql->chrome(function ($page,$browser) {
     $page->goto('https://www.iviewui.com/components/button');
     // 等待h1元素出现
     $page->waitFor('h1');
+    // 获取页面HTML内容
+    $html = $page->content();
+    // 关闭浏览器
+    $browser->close();
+    // 返回值一定要是页面的HTML内容
+    return $html;
+})->find('h1')->text();
+```
+## 调试
+调试有很多种方法，下面演示通过页面截图和启动可视化Chrome浏览器来了解页面加载情况
+
+### 页面截图
+运行下面代码后可以在项目根目录下看到`page.png`截图文件。
+```php
+$text = $ql->chrome(function ($page,$browser) {
+    $page->goto('https://www.iviewui.com/components/button');
     // 页面截图
     $page->screenshot(['path' => 'page.png']);
+    $html = $page->content();
+    $browser->close();
+    return $html;
+})->find('h1')->text();
+```
+
+#### 启动可视化Chrome浏览器
+运行下面代码后会启动一个Chrome浏览器。
+```php
+$text = $ql->chrome(function ($page,$browser) {
+    $page->goto('https://www.iviewui.com/components/button');
     $html = $page->content();
     // 这里故意设置一个很长的延长时间，让你可以看到chrome浏览器的启动
     sleep(10000000);
@@ -91,5 +118,3 @@ $text = $ql->chrome(function ($page,$browser) {
  'devtools' => true, // 打开浏览器的开发者工具
 ])->find('h1')->text();
 ```
-
-
